@@ -1,45 +1,55 @@
+
 import React, {useState} from 'react'
 
-
 export default function TextForm(props) {
+
+  // For upperCase
     const handleUpClick = () =>{
-        // console.log(text);
         let newText = text.toUpperCase();
         setText(newText)
     } 
+    // for lowerCase
     const handleLoClick = () =>{
-        // console.log(text);
+        
         let newText = text.toLowerCase();
         setText(newText)
     } 
+    // for clear Text
     const handleClearClick = () =>{
-        // console.log(text);
         let newText = "";
         setText(newText)
     } 
-    const handleOnChange = (event) =>{
-        setText(event.target.value)
-    } 
-     
-    const handleCopy = () =>{
-      let text = document.getElementById("myBox");
-      text.select();
-      navigator.clipboard.writeText(text.value);
-    }
-
     
+    // for extraSpace remove
     const handleExtraSpaces = () =>{
       let newText = text.split(/[ ]+/);
       setText(newText.join(" "));
       
     }
     
-    const handlePaste = () =>{
-      let pasteText = document.getElementById("myBox");
-       navigator.clipboard.readText(pasteText.value);
+    // for copy
+    const handleCopy = async() =>{
+
+        setCopyText(text);
+       
     }
-    const [text, setText] = useState('');
+
+    // for Paste
+    const handlePaste = () =>{
+
+      setText(`${text} ${copyText}`);
+
+      //  navigator.clipboard.readText();
+    }
+
+    const handleOnChange = (event) =>{
+        setText(event.target.value)
+      
+    } 
+     
     
+    const [text, setText] = useState('');
+    const [copyText, setCopyText] = useState('');
   return (
     <>
     <div  className='container'> 
@@ -54,6 +64,7 @@ export default function TextForm(props) {
              <button className="btn btn-primary mx-0.5 my-1" onClick={handleExtraSpaces}>Remove Extra  Spaces</button>
              <button className="btn btn-primary mx-1" onClick={handleClearClick}>Clear </button>
              <button className="btn btn-primary mx-0.5 my-2" onClick={handleCopy}>Copy </button>
+             <button className="btn btn-primary mx-1 my-2" onClick={handlePaste}>Paste</button>
              
     </div>
 
@@ -70,3 +81,4 @@ export default function TextForm(props) {
   )
 }
  
+
